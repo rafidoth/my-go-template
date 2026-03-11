@@ -11,10 +11,11 @@ import (
 )
 
 type Config struct {
-	Primary  Primary        `koanf:"primary" validate:"required"`
-	Server   ServerConfig   `koanf:"server" validate:"required"`
-	Database DatabaseConfig `koanf:"database" validate:"required"`
-	Auth     AuthConfig     `koanf:"auth" validate:"required"`
+	Primary       Primary              `koanf:"primary" validate:"required"`
+	Server        ServerConfig         `koanf:"server" validate:"required"`
+	Database      DatabaseConfig       `koanf:"database" validate:"required"`
+	Auth          AuthConfig           `koanf:"auth" validate:"required"`
+	Observability *ObservabilityConfig `koanf:"observability"`
 }
 
 type Primary struct {
