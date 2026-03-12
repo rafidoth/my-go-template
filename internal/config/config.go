@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 	_ "github.com/joho/godotenv/autoload"
@@ -49,10 +50,10 @@ type AuthConfig struct {
 
 func LoadConfig() (*Config, error) {
 	logger := zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger()
-	k := koanf.New(".")
 
+	k := koanf.New(".")
 	err := k.Load(env.Provider("MYAPP_", ".", func(s string) string {
-		return ""
+		return strings.ToLower(strings.TrimPrefix(s, "MYAPP_"))
 	}), nil)
 
 	if err != nil {
@@ -60,7 +61,6 @@ func LoadConfig() (*Config, error) {
 	}
 
 	mainConfig := &Config{}
-
 	err = k.Unmarshal("", mainConfig)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("could not unmarshal main config")
